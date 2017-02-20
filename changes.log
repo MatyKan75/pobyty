@@ -1,0 +1,18 @@
+[2017-01-29] Verze 3.0.6
+    + Přidána konfigurace pobytu
+    + Vylepšení responsivity
+
+[2016-09-28] Verze 3.0.4
+    + Přidána možnost exportu dat.
+    + Přidány ikony pro do nabídky.
+    + Opravy responsivity
+
+[2016-09-26] Verze 3.0.3
+    + Pokud nedošlo k odhlášení, pak se při znovuotevření aplikace se automaticky
+      zobrazí seznam účastníků.
+
+[2016-09-26] Verze 3.0.2
+    + Aplikace přesunuta na ostrý web: pobyty.integritylife.org
+    + Upraveno uživatelské rozhraní menu a patička jsou přichyceny ke kraji okna.
+    + Filtrování umožněno pro téměř všechny sloupce a je možné používat logické 
+      operátory & ... AND, : .... OR

@@ -1,0 +1,152 @@
+<section class="w3-container">
+    <header class="w3-row">
+        <h4 class="w3-padding-8 w3-col l9 m6 s6">Seznam účastníků</h4>
+        <section class="w3-col l3 m6 s6 w3-margin-top">
+            <div class="w3-dropdown-hover w3-right">
+                <button class="w3-btn w3-light-grey w3-round w3-hover-dark-grey" style="margin-left:4px;">
+                    <i class="fa fa-th-large w3-large"></i>
+                    <span class="w3-small w3-slim w3-tag w3-round w3-light-grey"><?= $columns['name'] ?></span>
+                </button>
+                <div class="w3-dropdown-content w3-border w3-slim w3-card-4">
+                    <a href="attendees/default">Výchozí</a>
+                    <a href="attendees/food">Strava</a>
+                    <a href="attendees/payment">Platby</a>
+                    <a href="attendees/accommodation">Ubytování</a>
+                    <a href="attendees/contacts">Kontakty</a>
+                    <a href="attendees/personal">Os. údaje</a>
+                    <a href="attendees/groups">Skupiny</a>
+                </div>
+            </div>
+            <div class="w3-dropdown-hover w3-right w3-hide">
+                <button class="w3-btn w3-light-grey w3-round w3-hover-dark-grey" style="margin-left:4px;" disable>
+                    <i class="fa fa-print w3-large"></i>
+                </button>
+                <div class="w3-dropdown-content w3-border w3-slim w3-card-4">
+                    <?php
+                        echo '<a href="attendees/'.$columns['id'].'/printTable">Obsah tabulky</a>';
+                        echo '<a href="attendees/'.$columns['id'].'/printGuestBook">Seznam hostů</a>';
+                        echo '<a href="attendees/'.$columns['id'].'/printRooms">Seznam ubytovaných</a>';
+                        echo '<a href="attendees/'.$columns['id'].'/printWaybill">Průvodky</a>';
+                        echo '<a href="attendees/'.$columns['id'].'/printPayments">Seznam plateb</a>';
+                    ?>
+                </div>
+            </div>
+            <div class="w3-dropdown-hover w3-right">
+                <button class="w3-btn w3-light-grey w3-round w3-hover-dark-grey"><i class="fa fa-download w3-large"></i></button>
+                <div class="w3-dropdown-content w3-border w3-slim w3-card-4">
+                    <?php
+                        echo '<a href="attendees/'.$columns['id'].'/exportTable">Export tabulky</a>';
+                        echo '<a href="attendees/'.$columns['id'].'/exportCheckIn">Export pro ubyt. linku</a>';
+                    ?>
+                </div>
+            </div>
+        </section>
+    </header>
+    <form class="w3-row w3-card-2 w3-light-grey w3-border w3-slim" method="post">
+        <input type="text" name="filter" class="w3-input w3-border-0 w3-col l10 m9 s8" placeholder="Definice podmínky" value="<?= $_SESSION['filter_text']?>"/>  
+        <section class="w3-col l2 m3 s4">
+            <button class="w3-btn w3-light-grey w3-round w3-hover-dark-grey" style="margin-top:2px;"><i class="fa fa-search w3-large"></i></button>
+            <label class="w3-padding-8 w3-small w3-text-dark-grey">
+                Nalezeno: <span class="w3-tag w3-dark-grey w3-text-white w3-round"><?= count($attendees) ?></span>
+            </label>
+        </section>
+    </form>
+    <table class="w3-table-all w3-card-2 w3-slim w3-hoverable w3-border w3-responsive" style="width:100%;">
+    <tr class="w3-dark-grey">
+        <th>Jméno</th>
+        <?php if(empty($columns) || stristr($columns,'Adresa')) : ?><th>Adresa</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Č.OP')) : ?><th>Č.OP</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Narozen(a)')) : ?><th class="w3-right-align">Narozen(a)</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Telefon')) : ?><th class="w3-right-align">Telefon</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Email')) : ?><th>Email</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Účastník')) : ?><th class="w3-left-align">Účastník</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Hnutí')) : ?><th class="w3-left-align">Hnutí</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Dítě')) : ?><th class="w3-center">Dítě&#63;</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Ubytování')) : ?><th>Ubytování</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Pracovník')) : ?><th class="w3-center">Pracovník&#63;</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Porce')) : ?><th class="w3-left-align">Porce</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Veget.')) : ?><th class="w3-center">Veget&#63;</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Pozn.')) : ?><th>Pozn.</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Přihlášen(a)')) : ?><th class="w3-right">Přihlášen(a)</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Od-Do')) : ?><th class="w3-center">Od - Do</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Skupina')) : ?><th class="w3-center">Skupina</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Objednávka')) : ?><th class="w3-right">Objednávka</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Záloha')) : ?><th class="w3-right-align">Záloha</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Doplatek')) : ?><th class="w3-right-align">Doplatek</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Platba')) : ?><th class="w3-left-align">Platba</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Cena')) : ?><th class="w3-right">Cena</th><?php endif?>
+        <?php if(empty($columns) || stristr($columns,'Zaplaceno')) : ?><th class="w3-center">Zaplaceno&#63;</th><?php endif?>
+    </tr>
+    <?php foreach($attendees as $attendee) : ?>
+        <tr class="w3-hover-grey">
+            <td><a href="attendee/<?= $attendee['ID'] ?>"><?= $attendee['Jméno'] ?></a></td>
+            <?php if(empty($columns) || stristr($columns,'Adresa')) : ?>
+                <td><?= $attendee['Adresa']?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Č.OP')) : ?>
+                <td><?= $attendee['Č.OP']; ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Narozen(a)')) : ?>
+                <td class="w3-right-align"><?= $attendee['Narozen(a)'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Telefon')) : ?>
+                <td class="w3-right-align"><?= $attendee['Telefon']; ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Email')) : ?>
+                <td><?= $attendee['Email']; ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Účastník')) : ?>
+                <td class="w3-left-align"><?= $attendee['Účastník']; ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Hnutí')) : ?>
+                <td class="w3-left-align"><?= $attendee['Hnutí'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Dítě')) : ?>
+                <td class="w3-center"><?= $attendee['Dítě'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Ubytování')) : ?>
+                <td><?= $attendee['Ubytování']?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Pracovník')) : ?>
+                <td class="w3-center"><?= $attendee['Pracovník'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Porce')) : ?>
+                <td class="w3-left-align"><?= $attendee['Porce'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Veget.')) : ?>
+                <td class="w3-center"><?= $attendee['Veget.'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Pozn.')) : ?>
+                <td style="width:25%;"><?= $attendee['Pozn.'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Přihlášen(a)')) : ?>
+                <td class="w3-right"><?= $attendee['Přihlášen(a)'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Od-Do')) : ?>
+                <td class="w3-center"><?= $attendee['Od-Do'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Skupina')) : ?>
+                <td class="w3-center"><?= $attendee['Skupina'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Objednávka')) : ?>
+                <td class="w3-right"><?= $attendee['Objednávka'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Záloha')) : ?>
+                <td class="w3-right-align"><?= $attendee['Záloha'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Doplatek')) : ?>
+                <td class="w3-right-align"><?= $attendee['Doplatek'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Platba')) : ?>
+                <td class="w3-left-align"><?= $attendee['Platba'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Cena')) : ?>
+                <td class="w3-right"><?= $attendee['Cena'] ?></td>
+            <?php endif?>
+            <?php if(empty($columns) || stristr($columns,'Zaplaceno')) : ?>
+                <td class="w3-center"><?= $attendee['Zaplaceno'] ?></td>
+            <?php endif?>
+        </tr>
+    <?php endforeach?>
+    </table>
+</section>

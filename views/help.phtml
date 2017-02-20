@@ -1,0 +1,60 @@
+<section class="w3-slim w3-container">
+    <header>
+        <h4 class="w3-padding-8">Nápověda aplikace</h4>
+    <header>
+    <p class="w3-text-grey"> Vítejte v nápovědě aplikace In-Life Pobyty. Aplikace je určena pro webové (on-line) 
+        použití a ke svému běhu potřebuje internetové připojení.
+    </p>
+    <div class="w3-accordion w3-white">
+        <button onclick="myFunction('basics')" class="w3-btn-block w3-left-align w3-white w3-hover-dark-grey w3-text-dark-grey">
+            <b>Základy práce s aplikací</b>
+        </button>
+        <div id="basics" class="w3-accordion-content w3-container w3-show w3-text-grey">
+            <p> Záhlaví aplikace obsahuje název aktuálního pobytu (na obrázku pobyt V.I.P.) a základní nabídku aplikace.<br/>
+                Kliknutím na název pobytu se zobrazí základní informace o pobytu. Pokud přihlášený uživatel má 
+                administrátorské oprávnění bude mu umožněno konfigurovat daný pobyt.
+            <dl>
+                <dt><i class="fa fa-user-plus"></i> Registrace</dt><dd>umožňuje registrovat osobu na daný pobyt.</dd>
+                <dt><i class="fa fa-group"></i> Účastníci</dt><dd>zobrazí seznam všech registrovaných účastníků pobytu.</dd>
+                <dt><i class="fa fa-line-chart"></i> Přehledy</dt><dd>zobrazí přehled objednaných jídel, noclehů, plateb.</dd>
+                <dt><i class="fa fa-gears"></i> Nastavení</dt><dd>umožní nastavit vlastnosti aplikace. V případě, 
+                že uživatel má administrátorská oprávnění, umožní konfiguraci pobytu.</dd>
+                <dt><i class="fa fa-question-circle"></i> Nápověda</dt><dd>zobrazí nápovědu aplikace.</dd>
+                <dt><i class="fa fa-sign-out"></i> Odhlášení</dt><dd>odhlásí uživatele z aplikace.</dd>
+            </dl>
+            </p>
+        </div>
+        <button onclick="myFunction('login')" class="w3-btn-block w3-left-align w3-white w3-hover-dark-grey w3-text-dark-grey">
+            <b>Přihlášení</b><br/>
+        </button>
+        <div id="login" class="w3-accordion-content w3-container">
+            <p class="w3-text-grey"> Pro přihlášení vložte uživatelské jméno a heslo. Bez úspěšného přihlášení nebude možné aplikaci používat.
+                Pokud jste uživatelem s administrátorskými právy, budete moci konfigurovat vlastnosti pobytu. <br/>
+                <img src="img/app_login.png" class="w3-card-4 w3-round w3-margin"></img><br/>
+            </p>
+        </div>
+        <button onclick="myFunction('registration')" class="w3-btn-block w3-left-align w3-white w3-hover-dark-grey w3-text-dark-grey">
+            <b>Registrace</b>
+        </button>
+        <div id="registration" class="w3-accordion-content w3-container">
+            <p>...</p>
+        </div>
+        <button onclick="myFunction('queries')" class="w3-btn-block w3-left-align w3-white w3-hover-dark-grey w3-text-dark-grey">
+            <b>Tvorba dotazů</b>
+        </button>
+        <div id="queries" class="w3-accordion-content w3-container">
+            <p>...</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    function myFunction(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else { 
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>

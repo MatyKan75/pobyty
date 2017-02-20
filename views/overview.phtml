@@ -1,0 +1,34 @@
+<section class="w3-container">
+    <header>
+        <h4 class="w3-padding-8">Přehled objednávek a financí</h4>
+    <header>
+    <section class="w3-slim w3-margin-bottom">
+        <?php
+            $eventHelper = new EventHelper();
+            $event = $eventHelper->getEvent($_COOKIE['event']);
+            echo '<p>Termín: <b>'.date('j.n.Y',strtotime($event['zacatek'])).'</b> - <b>'
+                .date('j.n.Y',strtotime($event['konec'])).'</b>&nbsp;&nbsp;||&nbsp;&nbsp;';
+            echo 'Místo: <b>'.$event['zarizeni'].'</b>&nbsp;&nbsp;||&nbsp;&nbsp;';
+            echo 'Počet účastníků: <b>'.$eventHelper->getAttendeesCount($_COOKIE["event"])[0].'</b></p>';
+            echo 'Stav pokladny: <b>'.number_format($eventHelper->getCashStatus($_COOKIE['event'])['doplatky'], 0, ',', ' ').'</b>,- Kč<br>';
+            echo 'Zálohy: <b>Bratislava</b> 0,- Kč &nbsp;&nbsp;| <b>Brno</b> 0,- Kč &nbsp;&nbsp;| <b>Hradec</b> 0,- Kč &nbsp;&nbsp;| <b>Ostrava</b> 0,- Kč &nbsp;&nbsp;| <b>Praha</b> 0,- Kč';
+        ?>
+        
+    </section>
+    <table class="w3-table-all w3-card-4 w3-slim w3-hoverable w3-slim">
+        <tr class="w3-dark-grey">
+            <th></th>
+            <th>Snídaně</th>
+            <th>Obědy</th>
+            <th>Večeře</th>
+            <th>Noclehy</th>
+        </tr>
+        <tr class="w3-hover-amber">
+            <td><b>St 27.1.</b></td>
+            <td><b>0/0</b> <span class="w3-text-grey">0/0</span></td>
+            <td><b>0/0</b> <span class="w3-text-grey">0/0</span></td>
+            <td><b>0/0</b> <span class="w3-text-grey">0/0</span></td>
+            <td><b>45</b></td>
+        </tr>
+    </table>
+</section>

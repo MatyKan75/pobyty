@@ -1,0 +1,9 @@
+<sets>
+ <set id="default" name="Výchozí">Jméno,Adresa,Narozen(a),Účastník,Hnutí,Ubytování</set>
+ <set id="food" name="Strava">Jméno,Účastník,Hnutí,Pracovník,Porce,Veget.,Pozn.</set>
+ <set id="payment" name="Platby">Jméno,Účastník,Hnutí,Pracovník,Záloha,Doplatek,Platba,Cena,Zaplaceno</set>
+ <set id="accommodation" name="Ubytování">Jméno,Účastník,Hnutí,Pracovník,Ubytování,Dítě,Přihlášen(a),Od-Do</set>
+ <set id="contacts" name="Kontakty">Jméno,Adresa,Narozen(a),Telefon,Email</set>
+ <set id="personal" name="Os. údaje">Jméno,Adresa,Narozen(a),Č.OP,Hnutí,Účastník</set>
+ <set id="groups" name="Skupiny">Jméno,Účastník,Hnutí,Pracovník,Dítě,Od-Do,Skupina</set>
+</sets>

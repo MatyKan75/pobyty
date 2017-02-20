@@ -1,0 +1,75 @@
+<form method="post" class="w3-slim w3-container">
+	<section>	
+		<header class="w3-row">
+			<h4 class="w3-padding-8 w3-col l12 m12 s12">Správa databáze</h4>
+		</header>
+		<section>
+			<h6><b>Pobyty/Akce</b></h6>
+			<p class="w3-text-grey w3-justify">Seznam pobytů/akcí přístupných v aplikaci. Pro jednotlivé pobyty můžete nastavovat 
+			ceny, příplatky/slevy. UPOZORNĚNÍ: Nastavení pobytu/akce je potřeba provést ještě před první registrací
+			účastníků, jinak nebude zajištěna konzistence a integrita dat.
+			</p>
+			<table class="w3-table-all w3-card-2 w3-slim w3-hoverable" style="max-width:85%;">
+				<tr class="w3-dark-grey">
+					<th>Pobyt/Akce</th>
+					<th>Termín</th>
+					<th>Zařízení</th>
+				</tr>
+				<?php foreach($events as $event) :?>
+				<tr class="w3-hover-grey">
+					<td><a href="/event/<?= $event['id'] ?>"><?= $event['nazev'] ?></td>
+					<td><?= date("j.n.Y",strtotime($event['zacatek'])) ?> - <?= date("j.n.Y",strtotime($event['konec'])) ?></td>
+					<td><?= $event['zarizeni'] ?></td>
+				</tr>
+				<?php endforeach ?>
+				<tr class="w3-hover-none">
+					<td><a href="/event/create" class="w3-btn-floating w3-light-grey w3-hover-grey" style="text-decoration:none;">+</a></td>
+					<td></td>
+				</tr>
+			</table>
+		</section>
+		<section class="w3-padding-16">
+			<h6><b>Uživatelé</b></h6>
+			<p class="w3-text-grey w3-justify">Seznam uživatelů, kterí mají přístup k aplikaci. Kliknutím na konkrétního 
+			uživatele můžete upravovat jeho vlastnosti a práva, případně vytvářet nové nebo odstraňovat nepotřebné. 
+			</p>
+			<table class="w3-table-all w3-card-2 w3-slim w3-hoverable" style="max-width:480px;">
+				<tr class="w3-dark-grey">
+					<th>Uživatel</th>
+					<th>Admin</th>
+				</tr>
+				<?php foreach($users as $user) :?>
+				<tr class="w3-hover-grey">
+					<td><a href="/user/<?= $user['uid'] ?>"><?= $user['jmeno'] ?> <?php if($user['jmeno']==$_SESSION['user']) echo ' <span class=" w3-small w3-tag w3-round w3-dark-grey">Aktivní</span>'; ?></td>
+					<td><?= $user['admin'] ?></td>
+				</tr>
+				<?php endforeach ?>
+				<tr class="w3-hover-none">
+					<td><a href="/user/create" class="w3-btn-floating w3-light-grey w3-hover-grey" style="text-decoration:none;">+</a></td>
+					<td></td>
+				</tr>
+			</table>
+		</section>
+		<section class="w3-padding-16">
+			<h6><b>Zařízení</b></h6>
+			<p class="w3-text-grey w3-justify">Seznam zařízení, ve kterých probíhají pobyty In-Life.
+			</p>
+			<table class="w3-table-all w3-card-2 w3-slim w3-hoverable" style="max-width:85%;">
+				<tr class="w3-dark-grey">
+					<th>Název</th>
+					<th>Typy ubytování</th>
+				</tr>
+				<?php foreach($accomodations as $accomodation) :?>
+				<tr class="w3-hover-grey">
+					<td><?= $accomodation['nazev'] ?></td>
+					<td><?= $accomodation['typy_ubyt'] ?></td>
+				</tr>
+				<?php endforeach ?>
+				<tr class="w3-hover-none">
+					<td><a href="" class="w3-btn-floating w3-light-grey w3-hover-grey" style="text-decoration:none;">+</a></td>
+					<td></td>
+				</tr>
+			</table>
+		</section>
+	</section>	
+</form>

@@ -1,0 +1,210 @@
+<section class="w3-container w3-slim w3-text-dark-grey">
+    <header>
+        <h4 class="w3-padding-8">
+            <?php if (empty($attendee)) {echo'Nová registrace';}else{echo 'Účastník: '.$attendee['jmeno'].' '.$attendee['prijmeni'];} ?>
+        </h4>
+    </header>
+    <form method="post"  class="w3-center">
+        <!-- Informace o osobě -->
+        <section class="w3-row w3-light-grey w3-card-2 w3-padding w3-margin-top">
+            <div class="w3-row w3-row-padding w3-margin-top w3-margin-bottom">
+                <div class="w3-col l4 m6 s12">
+                    <input class="w3-input w3-border w3-round" name="name" type="text" placeholder="Jméno" value="<?= $attendee['jmeno'] ?>"/>
+                </div>
+                <div class="w3-col l4 m6 s12">
+                    <input class="w3-input w3-border w3-round" name="surname" type="text" placeholder="Příjmení" value="<?= $attendee['prijmeni'] ?>"/>
+                </div>
+                <div class="w3-col l2 m4 s4">
+                    <input class="w3-input w3-border w3-round" name="birthday" type="text" placeholder="Datum narození" value="<?= date("j.n.Y",strtotime($attendee['dat_naroz'])) ?>"/>
+                </div>
+                <div class="w3-col l1 m2 s3">
+                    <input class="w3-radio" type="radio" name="gender" name="gender" value="Muž" <?php if($attendee['pohlavi']=='Muž') echo "checked"; ?> >Muž</input>
+                </div>
+                <div class="w3-col l1 m2 s3">
+                    <input class="w3-radio" type="radio" name="gender" value="Žena" <?php if($attendee['pohlavi']=='Žena') echo "checked"; ?>>Žena</input>
+                </div>
+            </div>
+            <div class="w3-row w3-row-padding w3-margin-top w3-margin-bottom">
+                <div class="w3-col l4 s5">
+                    <input class="w3-input w3-border w3-round" name="street" type="text" placeholder="Ulice" value="<?= $attendee['ulice'] ?>"/>
+                </div>
+                <div class="w3-col l3 s5">
+                    <input class="w3-input w3-border w3-round" name="city" type="text" placeholder="Město" value="<?= $attendee['mesto'] ?>"/>
+                </div>
+                <div class="w3-col l1 s2">
+                    <input class="w3-input w3-border w3-round" name="zip" type="text" placeholder="PSČ" value="<?= $attendee['psc'] ?>"/>
+                </div>
+                <div class="w3-col l2 s5">
+                    <input class="w3-input w3-border w3-round" name="country" type="text" placeholder="Stát" value="<?= $attendee['stat'] ?>"/>
+                </div>
+                <div class="w3-col l2 m3 s4 w3-left">
+                    <select class="w3-padding w3-border w3-round" name="movement">
+                        <option value="" <?php if(empty($attendee['hnuti'])) echo "selected"; ?>></option>
+                        <option value="Bratislava" <?php if($attendee['hnuti']=='Bratislava') echo "selected"; ?>>Bratislava</option>
+                        <option value="Brno" <?php if($attendee['hnuti']=='Brno') echo "selected"; ?>>Brno</option>
+                        <option value="Hradec" <?php if($attendee['hnuti']=='Hradec') echo "selected"; ?>>Hradec</option>
+                        <option value="Ostrava" <?php if($attendee['hnuti']=='Ostrava') echo "selected"; ?>>Ostrava</option>
+                        <option value="Praha" <?php if($attendee['hnuti']=='Praha') echo "selected"; ?>>Praha</option>
+                    </select>
+                </div>
+            </div>
+            <div class="w3-row w3-row-padding w3-margin-top w3-margin-bottom">
+                <div class="w3-col l2 m2 s3">
+                    <input class="w3-input w3-border w3-round" name="phone" type="text" placeholder="Telefon" value="<?= $attendee['telefon'] ?>"/>
+                </div>
+                <div class="w3-col l4 m4 s6">
+                    <input class="w3-input w3-border w3-round" name="email" type="text" placeholder="Email" value="<?= $attendee['email'] ?>"/>
+                </div>
+                <div class="w3-col l2 m2 s3">
+                    <input class="w3-input w3-border w3-round" name="idcard" type="text" placeholder="Č.pasu/O.P." value="<?= $attendee['cis_pasu'] ?>"/>
+                </div>
+                <div class="w3-col l2 m2 s3 ">
+                    <input class="w3-check" type="checkbox" name="staff" <?php if($attendee['pracovnik']=='Ano') echo 'checked="checked"'; ?>>Pracovník</input>
+                </div>
+                <div class="w3-col l2 m2 s3">
+                    <input class="w3-check" type="checkbox" name="staff_type" <?php if($attendee['typ_prac']==1) echo 'checked="checked"'; ?>>OSVČ</input>
+                </div>
+            </div>
+        </section>
+        <!-- Informace o objednaných službách -->
+        <section class="w3-white w3-margin-top w3-row">
+            <!-- Strava a ubytování -->
+            <section class="w3-half w3-padding">
+                <div class="w3-row-padding ">
+                    <div class="w3-col l12 s12">
+                        <textarea class="w3-input w3-border w3-round" rows="2" name="notes" placeholder="Poznámka"><?= $attendee['poznamka'] ?></textarea>
+                    </div>
+                </div> 
+                <div class="w3-row-padding w3-margin-top">
+                    <div class="w3-col l4 m4 s4">
+                        <input class="w3-input w3-border w3-round" name="loginday" type="text" placeholder="Datum přihlášení" value="<?= date("j.n.Y",strtotime($attendee['dat_prihl'])) ?>"/>
+                    </div>
+                    <div class="w3-col l3 m3 s3 w3-right">
+                        <input class="w3-input w3-border w3-round" name="group" type="text" placeholder="Skupina" value="<?= $attendee['skupina'] ?>"/>
+                    </div>
+                </div>
+                <div class="w3-row-padding w3-margin-top">
+                    <div class="w3-col l4 m4 s4">
+                        <select class=" w3-border w3-round w3-padding w3-round" name="attendee_type">
+                            <?php foreach(array_keys($attendee_types) as $code) : ?>
+                                <?php if(!empty($attendee_types[$code])) : ?>
+                                    <option value="<?= $code ?>" <?php if($attendee['typ_ucast'] == $code) echo "selected"; ?>><?= $attendee_types[$code] ?></option>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                    <div class="w3-col l4 m6 s4">
+                        <select class="w3-padding w3-round w3-border w3-round" name="attendee_type">
+                            <?php foreach(array_keys($accomodation_types) as $code) : ?>
+                                <?php if(!empty($accomodation_types[$code])) : ?>
+                                    <option value="<?= $code ?>" <?php if($attendee['typ_ubyt'] == $code) echo "selected"; ?>><?= $accomodation_types[$code] ?></option>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                    <div class="w3-col l4 m4 s4">
+                        <input class="w3-input w3-border w3-round" name="room" type="text" placeholder="Pokoj" value="<?= $attendee['pokoj'] ?>"/>
+                    </div>
+                </div>
+                <div class="w3-row-padding w3-margin-top w3-margin-bottom">
+                    <div class="w3-col l3 s3 m3">
+                        <input class="w3-radio" type="radio" name="food" value="1" <?php if($attendee['porce']==1) echo "checked"; ?> >Dospělá</input>
+                    </div>
+                    <div class="w3-col l3 s3 m3">
+                        <input class="w3-radio" type="radio" name="food" value="2" <?php if($attendee['porce']==2) echo "checked"; ?>>Dětská</input>
+                    </div>
+                    <div class="w3-col l3 s4 m4">
+                        <input class="w3-check" type="checkbox" name="vegetarian" <?php if($attendee['veget']=='Ano') echo 'checked="checked"'; ?>>Vegetarián</input>
+                    </div>
+                </div>
+            </section>
+            <!-- Objednávky strava, nocleh -->
+            <section class="w3-quarter w3-light-grey">
+                <div class="w3-row-padding">
+                    <div class="w3-col l4 s4 m4 w3-left-align w3-padding-top">
+                        <label class="w3-slim"><b>Objednávka:</b></label>
+                    </div>
+                </div>
+                <?php foreach($event_days as $day) : ?>
+                <div class="w3-row-padding">
+                    <label class="w3-col l5 s5 m5 w3-right-align w3-padding-top"><?= $day ?></label>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                </div>
+                <?php endforeach?>
+                <div class="w3-row-padding w3-margin-bottom">
+                    <label class="w3-col l5 s5 m5 w3-right-align w3-padding-top"> </label>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                    <input class="w3-check w3-col l2 s2 m2" type="checkbox"></input>
+                </div>
+            </section>
+            <!-- Služby -->
+            <section class="w3-quarter">
+                <div class="w3-row-padding">
+                    <div class="w3-col w3-left-align w3-padding-top">
+                        <label class="w3-slim"><b>Služby:</b></label>
+                    </div>
+                    <div class="w3-col w3-left-align w3-padding-top">
+                        <label class="w3-slim w3-small w3-text-grey w3-padding-left">Žádné</label>
+                    </div>
+                </div>
+                
+            </section>
+        </section>
+        <!-- Cena a platby -->
+        <section class="w3-row w3-light-grey w3-card-2 w3-padding w3-margin-top">
+            <div class="w3-row w3-row-padding w3-margin-top w3-margin-bottom">
+                <div class="w3-col l2 m2 s3">
+                    <input class="w3-input w3-border w3-round" name="deposit" type="text" placeholder="Záloha" value="<?= $attendee['zaloha'] ?>"/>
+                </div>
+                <div class="w3-col l2 m2 s3">
+                    <input class="w3-input w3-border w3-round" name="payment" type="text" placeholder="Doplatek" value="<?= $attendee['doplatek'] ?>"/>
+                </div>
+                <div class="w3-col l2 m2 s6">
+                    <select class="w3-padding w3-round w3-border w3-round" name="attendee_type">
+                        <?php foreach(array_keys($payment_types) as $code) : ?>
+                            <?php if(!empty($payment_types[$code])) : ?>
+                                <option value="<?= $code ?>" <?php if($attendee['typ_dopl'] == $code) echo "selected"; ?>><?= $payment_types[$code] ?></option>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="w3-col l1 m2 s4 w3-right-align">
+                    <input class="w3-check" name="overheads-check" type="checkbox" placeholder="Režie/den"/>Režie:
+                </div>
+                <div class="w3-col l2 m1 s2">
+                    <input class="w3-input w3-border w3-round" name="overheads" type="text" placeholder="Režie/den" value="<?= $attendee['rezie'] ?>"/>
+                </div>
+                <div class="w3-col l1 m2 s4 w3-right-align">
+                    <input class="w3-check" name="surcharge-check" type="checkbox" placeholder="Režie/den"/>Přípl.:
+                </div>
+                <div class="w3-col l2 m1 s2">
+                    <input class="w3-input w3-border w3-round" name="surcharge" type="text" placeholder="Příplatek" value="<?= $attendee['priplatek'] ?>"/>
+                </div>
+            </div>
+            <div class="w3-row w3-row-padding w3-margin-top w3-margin-bottom">
+                <div class="w3-col l2 m2 s4">
+                    <input class="w3-check" name="fix-price" type="checkbox"/>Fix. cena
+                </div>
+                <div class="w3-col l2 m2 s4">
+                    <input class="w3-input w3-border w3-round" name="price" type="text" placeholder="Cena" value="<?= $attendee['cena'] ?>"/>
+                </div>
+                <div class="w3-col l2 m3 s4 w3-left-align">
+                    <input class="w3-check" name="paid" type="checkbox"/>Zaplaceno
+                </div>
+            </div>
+        </section>
+        <!-- Tlačítka pro uložení a procházení záznamů -->
+        <section class="w3-margin-top w3-row">
+            <div class="w3-padding-top">
+                <input class="w3-btn w3-light-grey w3-round w3-hover-dark-grey w3-left" type="button" value="Uložit">
+                <input class="w3-btn w3-light-grey w3-round w3-hover-dark-grey w3-right" type="button" value="Další">
+                <input class="w3-btn w3-light-grey w3-round w3-hover-dark-grey w3-right w3-margin-right" type="button" value="Předchozí">
+            </div>
+        </section>
+    </form>
+</section>

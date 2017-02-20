@@ -1,0 +1,89 @@
+<form method="POST" class="w3-container">
+	<header class="w3-row">
+		<h4 class="w3-padding-8 w3-col l10 m8 s12">Konfigurace pobytu</h4>
+		<button class="w3-btn w3-light-grey w3-margin-top w3-round w3-hover-dark-grey w3-right w3-col l2 m2 w3-hide-small w3-slim">Uložit změny</button>
+	</header>
+	<ul class="w3-navbar w3-dark-grey w3-slim">
+		<li><a href="javascript:void(0)" onclick="openTab('general')" class=" w3-hover-theme">Obecné</a></li>
+		<li><a href="javascript:void(0)" onclick="openTab('prices')" class=" w3-hover-amber">Ceny</a></li>
+		<li><a href="javascript:void(0)" onclick="openTab('surcharges')" class=" w3-hover-amber">Příplatky</a></li>
+	</ul>
+
+	<div id="general" class="w3-container settings w3-border w3-slim">
+		<p>Obecná nastavení pobytu</p>
+		<div class="w3-row  w3-row-padding w3-margin-bottom">
+			<label class="w3-col l1 m2 s6 w3-padding">Název:</label>
+			<input class="w3-col l11 m10 s12 w3-padding w3-input w3-border w3-round" type="text" placeholder="Název" value="<?= $event['nazev']?>" name="event-name"></input>
+		</div>
+		<div class="w3-row w3-row-padding w3-margin-bottom">
+			<label class="w3-col l1 m2 s6 w3-padding">Termín:</label>
+			<input class="w3-col l3 m4 s12 w3-padding w3-input w3-border w3-round" type="text" placeholder="Termín" value="<?= date("j.n.Y",strtotime($event['zacatek'])) ?> - <?= date("j.n.Y",strtotime($event['konec'])) ?>" name="date"></input>
+			<label class="w3-col l2 m2 s6 w3-padding">Přihlásit do:</label>
+			<input class="w3-col l2 m4 s12 w3-padding w3-input w3-border w3-round" type="text" placeholder="Datum" value="<?= date("j.n.Y",strtotime($event['prihl_do']))?>" name="date"></input>
+		</div>
+		<div class="w3-row w3-row-padding w3-margin-bottom">
+			<label class="w3-col l1 m2 s6 w3-margin-top w3-padding">Zařízení:</label>
+			<select class="w3-col l4 m4 s12 w3-margin-top w3-padding w3-margin-right" onChange="changeAccTypes()">
+				<option disabled selected></option>
+				<?php foreach(array_keys($accomodationsR) as $accomodation) : ?>
+					<option value="<?= $accomodationsR[$accomodation] ?>" <?php if($accomodationsR[$accomodation] == $event['kod_zarizeni']) echo "selected"; ?> ><?= $accomodation ?></option>
+				<?php endforeach ?>
+			</select>
+			<input class="w3-col l6 m6 s12 w3-input w3-border w3-margin-top w3-round w3-padding" type="text" placeholder="Typy ubytování" value="<?= $accomodations[$event['kod_zarizeni']]['typy_ubyt'] ?>" name="accomodationTypes" id="accomod-types" readonly></input>
+		</div>
+		<div class="w3-row w3-row-padding w3-margin-bottom">
+			<p>Aplikace rozlišuje základní typy účastníků (<i>Student</i>, <i>Pracující</i>, <i>Dítě</i> a <i>Host</i>).
+			Pro definici dalších typů použijte následující textové pole.</p>
+			<input class="w3-col l12 m12 s12 w3-padding w3-input w3-border w3-round" type="text" placeholder="Další typy účastníků" value="" name="attendees-types"></input>
+		</div>
+		<div class="w3-row w3-margin-bottom">
+			<label class="w3-padding w3-col l2 m3 s3">První jídlo:</label>
+			<input class="w3-margin-top w3-col l1 m2 s3" type="radio"></input>
+		</div>
+	</div>
+
+	<div id="prices" class="w3-container settings w3-border w3-slim">
+		<p>Ceny ubytování, stravy a služeb</p> 
+	</div>
+
+	<div id="surcharges" class="w3-container settings w3-border w3-slim">
+		<p>Příplatky/slevy pro daný pobyt</p>
+	</div>
+	<button class="w3-btn w3-light-grey w3-margin-top w3-round w3-hover-dark-grey w3-col s6 w3-slim w3-hide-medium w3-hide-large">Uložit změny</button>
+</form>
+
+<script>
+	openTab('general');
+
+	function openTab(tabName) {
+		var i;
+		var x = document.getElementsByClassName("settings");
+		for (i = 0; i < x.length; i++) {
+		x[i].style.display = "none";  
+		}
+		document.getElementById(tabName).style.display = "block";  
+	}
+
+	function changeAccTypes(){
+
+		document.getElementById("accomod-types");
+	}
+
+	function filterByName() {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("name");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("table-content");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().startsWith(filter)) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+    <head>
+        <base href="/localhost" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><?= $GLOBALS['app_name']?> <?= $GLOBALS['app_version']?></title>
+        <meta name="description" content="<?= $description ?>" />
+        <meta name="keywords" content="<?= $keywords ?>" />
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-amber.css">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    </head>
+    <body class="w3-white w3-text-black">
+        <?php if($_SESSION['user']) :?>
+            <ul class="w3-navbar w3-theme-l1 w3-slim w3-top">
+                <?php 
+                    $eventHelper = new EventHelper();
+                    $event = $eventHelper->getEvent($_COOKIE['event']);
+                    if($_SESSION['admin']){
+                        echo '<li class="w3-hide-small"><a href="event/'.$_COOKIE['event'].'" class="w3-hover-dark-grey"><b>'.$event['nazev'].'</b></a></li>'; 
+                    } else {
+                        echo '<li class="w3-navitem w3-hide-small"><b>'.$event['nazev'].'</b></li>'; 
+                    }
+                    echo '<li class="w3-navitem w3-hide-small w3-hide-medium w3-text-dark-grey w3-small" style="margin-top:2px;">'.
+                        ' Účastníci: <b>'.$eventHelper->getAttendeesCount($_COOKIE["event"])[0].
+                        '</b>&nbsp;&nbsp;|&nbsp;&nbsp;Pokladna: <b>'.
+                        number_format($eventHelper->getCashStatus($_COOKIE['event'])['doplatky'], 0, ',', ' ').
+                        '</b>,- Kč </li>';
+                ?>
+                <li class="w3-hide-large w3-hide-medium w3-dropdown-hover w3-hover-dark-grey">
+                    <a href="javascript:void(0);">☰</a>
+                    <div id="drop-down-menu" class="w3-hide-large w3-hide-medium w3-dropdown-content w3-amber w3-slim">
+                        <a href="attendee/new" class="w3-hover-dark-grey"><span class="fa fa-user-plus"></span> Registrace</a>
+                        <a href="attendees/default" class="w3-hover-dark-grey"><span class="fa fa-group"></span> Účastrníci</a>
+                        <a href="overview" class="w3-hover-dark-grey"><span class="fa fa-line-chart"></span> Přehled</a>
+                        <?php if($_SESSION['admin']) :?>
+                            <a href="config" class="w3-hover-dark-grey"><i class="fa fa-database w3-large"></i> Konfigurace</a>
+                        <?php endif ?>
+                        <a href="settings" class="w3-hover-dark-grey"><i class="fa fa-gears w3-large"></i> Nastavení</a>
+                        <a href="help" class="w3-hover-dark-grey"><i class="fa fa-question-circle-o w3-large"></i> Nápověda</a>
+                        <a href="logout" class="w3-hover-dark-grey"><i class="fa fa-sign-out w3-large"></i> Odhlásit</a>
+                    </div>
+                </li>
+                <li class="w3-right w3-hide-small">
+                    <a href="logout" class="w3-hover-dark-grey"><i class="fa fa-sign-out w3-large"></i></a>
+                </li>
+                <li class="w3-right w3-hide-small">
+                    <a href="help" class="w3-hover-dark-grey <?php if($_SESSION['current-page']=='help') echo 'w3-dark-grey'?>"><i class="fa fa-question-circle-o w3-large"></i></a>
+                </li>
+                <?php if($_SESSION['admin']) :?>
+                    <li class="w3-right w3-tooltip w3-hide-small <?php if($_SESSION['current-page']=='config') echo 'w3-dark-grey'?>">
+                        <a href="config" class="w3-hover-dark-grey"><i class="fa fa-database w3-large"></i></a>
+                    </li>
+                <?php endif ?>
+                <li class="w3-right w3-tooltip w3-hide-small <?php if($_SESSION['current-page']=='settings') echo 'w3-dark-grey'?>">
+                    <a href="settings" class="w3-hover-dark-grey"><i class="fa fa-gears w3-large"></i></a>
+                </li>
+                <li class="w3-right w3-hide-small">
+                    <a href="overview" class="w3-hover-dark-grey <?php if($_SESSION['current-page']=='overview') echo 'w3-dark-grey'?>"><span class="fa fa-line-chart"></span></a>
+                </li>
+                <li class="w3-right w3-hide-small">
+                    <a href="attendees/default" class="w3-hover-dark-grey <?php if($_SESSION['current-page']=='attendees') echo 'w3-dark-grey'?>"><span class="fa fa-group"></span></a>
+                </li>
+                <li class="w3-right w3-hide-small">
+                    <a href="attendee/new" class="w3-hover-dark-grey <?php if($_SESSION['current-page']=='attendee') echo 'w3-dark-grey'?>"><span class="fa fa-user-plus"></span></a>
+                </li>
+            </ul>
+            
+        <?php endif ?>
+        <?php if($_SESSION['user']) : ?>
+            <header class="w3-text-dark-grey" style="margin-top:42px" >
+                
+            </header>
+        <?php endif ?> 
+        <?php foreach ($messages as $msg) : ?>
+            <p class="w3-panel w3-card-2 w3-slim w3-theme-l4 w3-padding w3-margin w3-leftbar w3-border-amber">
+                <span onclick="this.parentElement.style.display='none'" class="w3-closebtn w3-padding-bottom w3-small"><a class="fa fa-close w3-small"></a></span>
+                <?= $msg ?>
+            </p>
+        <?php endforeach ?>
+        <article class="w3-text-dark-grey" style="margin-bottom:42px;margin-top:42px">
+            <?php $this->controler->displayView(); ?>
+        </article>
+        <footer class="w3-container w3-small w3-bottom w3-dark-grey">
+            <?php if($_SESSION['user']) :?>
+                <div class="w3-left w3-padding-8">
+                    Server: <strong><?= $_COOKIE['databaseHost'] ?></strong> | Uživatel: <strong><?= $_SESSION['user']['jmeno'] ?></strong>
+                </div>
+            <?php endif ?>
+            <div class="w3-small w3-right w3-padding w3-hide-medium w3-hide-small">
+                Made with love and joy &copy; 2016 - <a href="http://www.integritylife.org" target="_blank">IntegrityLife</a>,
+                based on <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">W3CSS</a>
+            </div>
+        </footer>
+
+        <script>
+            function showDropDownMenu() {
+                var x = document.getElementById("drop-down-menu");
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else { 
+                    x.className = x.className.replace(" w3-show", "");
+                }
+            }
+        </script>
+    </body>
+</html>

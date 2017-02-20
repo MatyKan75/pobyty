@@ -1,0 +1,21 @@
+<form method="post" class="w3-slim w3-container">
+	<section>
+		<header class="w3-row">
+			<h4 class="w3-padding-8 w3-col l6 m5 s12">Vlastnosti uživatele</h4>
+			<button class="w3-btn w3-light-grey w3-margin-top w3-round w3-hover-dark-grey w3-right w3-col l2 m2 w3-hide-small" name="Action" type="submit" value="Save">Uložit změny</button>
+			<button class="w3-btn w3-light-grey w3-margin-top w3-margin-right w3-round w3-hover-dark-grey w3-right w3-col l2 m3 w3-hide-small <?php if(empty($jmeno)) echo "w3-hide"; ?>" name="Action" type="submit" value="Delete">Smazat uživatele</button>			
+		</header>
+		<div class="w3-row w3-row-padding w3-margin-top w3-margin-bottom">
+			<label class="w3-padding w3-col l1 m2 s12">Uživatel:</label>
+			<b><input class="w3-border w3-round w3-padding w3-col l3 m3 s12" type="text" name="user" value="<?= $jmeno ?>" required></b>
+			<input type="checkbox" class="w3-check w3-padding w3-margin-left w3-text-grey w3-col l2 m4 s12" <?php if($admin=='Ano') echo 'checked'; ?>></input><label class="w3-col w3-padding-top l2 m4 s4">Administrátor</label>
+		</div>
+		<div class="w3-row w3-row-padding w3-margin-top w3-margin-bottom">
+			<label class="w3-padding w3-margin-top w3-col l1 m2 s12">Heslo:</label>
+			<input class="w3-border w3-round w3-margin-top w3-padding w3-margin-right w3-col l3 m3 s12" type="password" name="password" placeholder="Zadejte nové heslo">
+			<input class="w3-border w3-round w3-margin-top w3-padding w3-col l3 m3 s12" type="password" name="re-password" placeholder="Zopakujte nové heslo">
+		</div>
+	</section>
+	<button class="w3-btn w3-light-grey w3-margin-top w3-margin-right w3-round w3-hover-dark-grey w3-col s6 w3-hide-large w3-hide-medium <?php if(empty($jmeno)) echo "w3-hide"; ?>" name="Action" type="submit" value="Delete">Smazat uživatele</button>
+	<button class="w3-btn w3-light-grey w3-margin-top w3-round w3-hover-dark-grey w3-col s5 w3-hide-large w3-hide-medium" name="Action" type="submit" value="Save">Uložit změny</button>
+</form>

@@ -1,0 +1,41 @@
+<form method="post" class="w3-slim w3-container">
+	<section>
+		<header class="w3-row">
+			<h4 class="w3-padding-8 w3-col l10 m8 s12">Nastavení aplikace</h4>
+			<button class="w3-btn w3-light-grey w3-margin-top w3-hover-dark-grey w3-right w3-round w3-hide-small w3-col l2 m3">Uložit změny</button>
+		</header>
+		<section class="w3-row">
+			<h6><b>Aktivní pobyt</b></h6>
+			<p class="w3-text-grey w3-justify">Vyberte pobyt, jehož data chcete upravovat. 
+			Pokud nejste uživatel s administrátorským oprávněním, budete moci prohlížet a upravovat 
+			informaco o osobách, jejich objednávkách, filtrovat a vyhledávat informace podle kriterií 
+			(více v <a href="/help#querying">nápovědě</a>). Pouze administrátoři budou moci upravovat 
+			samotné nastavení jednotlivých pobytů (termíny, ceny, příplatky, atd.).</p>
+			<select class="w3-padding w3-margin-left w3-margin-bottom w3-col l4 m6 s11" name="active_event">
+				<?php foreach($events as $event) : ?>
+					<option class="w3-padding-2"value="<?= $event['id'] ?>" <?= ($_COOKIE['event']==$event['id'])? "selected":""?>>
+						<?php echo $event['nazev']." (".date("j.n.Y",strtotime($event['zacatek'])).")"; ?>
+					</option>
+				<?php endforeach ?>
+			</select>
+		</section>
+		<section>
+			<h6 class="w3-margin-top"><b>Informace o uživateli</b></h6>
+			<p class="w3-text-grey w3-justify">Pro změnu vašeho hesla, stačí vyplnit obě pole 'Heslo' (zadaná hesla musí být totožná). 
+			Uživatelské jméno a práva může měnit pouze administrátor.</p>
+			<div class="w3-row w3-margin-top w3-margin-bottom">
+				<label class="w3-padding w3-margin-top w3-col l1 m2 s12">Uživatel:</label>
+				<b><input class="w3-border w3-round w3-padding w3-margin-top w3-col l3 m3 s12" type="text" name="user" value="<?= $_SESSION['user']['jmeno']?>" readonly></b>
+				<?php if($_SESSION['admin']) : ?>
+					<label class="w3-padding w3-text-grey w3-margin-top  w3-col l6 m8 s12">Jste uživatel s <b>administrátorským</b> oprávněním</label>
+				<?php endif?>
+			</div>
+			<div class="w3-row w3-margin-top w3-margin-bottom">
+				<label class="w3-padding w3-margin-top  w3-col l1 m2 s4">Heslo:</label>
+				<input class="w3-border w3-round w3-padding w3-margin-right  w3-margin-top  w3-col l3 m3 s12" type="password" name="password" placeholder="Zadejte nové heslo">
+				<input class="w3-border w3-round w3-padding   w3-margin-top w3-col l3 m3 s12" type="password" name="re-password" placeholder="Zopakujte nové heslo">
+			</div>
+		</section>
+		<button class="w3-btn w3-light-grey w3-margin-top w3-hover-dark-grey w3-round w3-hide-large w3-hide-medium w3-col s5">Uložit změny</button>
+	</section>
+</form>
